@@ -1,0 +1,43 @@
+{
+  "name": "slido-for-dgu",
+  "version": "1.0.0",
+  "description": "AWS Lambda 기반의 실시간 Q&A 플랫폼 (Slido 클론)",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "echo \"No build step required for ESM\"",
+    "deploy": "serverless deploy",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "local": "serverless offline",
+    "dev": "serverless offline",
+    "lint": "echo \"No linter configured yet\""
+  },
+  "dependencies": {
+    "@aws-sdk/client-apigatewaymanagementapi": "^3.0.0",
+    "@aws-sdk/client-dynamodb": "^3.0.0",
+    "@aws-sdk/lib-dynamodb": "^3.0.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "serverless": "^3.0.0",
+    "serverless-offline": "^13.0.0"
+  },
+  "keywords": [
+    "aws-lambda",
+    "serverless",
+    "qa-platform",
+    "websocket",
+    "dynamodb"
+  ],
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@aws-sdk/client-apigatewaymanagementapi": "^3.840.0",
+    "@aws-sdk/client-dynamodb": "^3.840.0",
+    "@aws-sdk/lib-dynamodb": "^3.840.0",
+    "uuid": "^11.1.0"
+  }
+}
