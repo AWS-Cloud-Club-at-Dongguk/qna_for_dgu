@@ -2,7 +2,6 @@
   "name": "qna-for-dgu",
   "version": "1.0.0",
   "description": "**AWS Lambda 기반의 실시간 Q&A 플랫폼**   방 생성, 익명 질문 등을 포함하는 개인 프로젝트입니다. AWS Cloud Clubs DGU에서 사용",
-  "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
