@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/bianbbc87/Slido_For_DGU#readme",
   "dependencies": {
+  },
+  "devDependencies": {
     "@types/node": "^24.0.10"
   }
 }
