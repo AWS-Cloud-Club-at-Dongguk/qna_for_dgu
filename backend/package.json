@@ -5,7 +5,8 @@
   "main": "index.ts",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "room": "ts-node-esm @/http/room/create/handler.ts"
   },
   "repository": {
     "type": "git",
@@ -19,7 +20,13 @@
   },
   "homepage": "https://github.com/bianbbc87/Slido_For_DGU#readme",
   "dependencies": {
-    "@types/node": "^24.0.10"
+    "@aws-sdk/client-dynamodb": "^3.844.0",
+    "@types/aws-lambda": "^8.10.150",
+    "@types/node": "^24.0.10",
+    "@types/qrcode": "^1.5.5",
+    "qrcode": "^1.5.4",
+    "uuid": "^11.1.0",
+    "zod": "^4.0.5"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
