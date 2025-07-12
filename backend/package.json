@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "**AWS Lambda 기반의 실시간 Q&A 플랫폼**   방 생성, 익명 질문 등을 포함하는 개인 프로젝트입니다. AWS Cloud Clubs DGU에서 사용",
   "main": "index.ts",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,5 +20,12 @@
   "homepage": "https://github.com/bianbbc87/Slido_For_DGU#readme",
   "dependencies": {
     "@types/node": "^24.0.10"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.4.0",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0"
   }
 }
