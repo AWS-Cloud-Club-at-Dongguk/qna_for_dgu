@@ -1,4 +1,5 @@
 import QRCode from "qrcode";
+import { InternalServerError } from "@/common/errors/InternelServerError";
 
 /**
  * Generates a QR code from the given text.
@@ -15,6 +16,6 @@ export const generateQrCode = async (text: string): Promise<string> => {
                 ? error.message
                 : JSON.stringify(error);
 
-        throw new Error("Failed [Util] in [generateQR] util : " + message);
+        throw new InternalServerError("Failed [Util] in [generateQR] util : " + message);
     }
 }

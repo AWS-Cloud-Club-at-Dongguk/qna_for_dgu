@@ -1,4 +1,5 @@
 import { Webhook, MessageBuilder } from 'discord-webhook-node';
+import { InternalServerError } from "@/common/errors/InternelServerError";
 
 /**
  * Utility function to send messages to a Discord channel.
@@ -9,7 +10,7 @@ export const sendDiscordMsg = async (roomName: string, qrCodeImgUrl: string) => 
     const webhookUrl = process.env.DISCORD_QNA_WEBHOOK_URL;
 
     if (!webhookUrl) {
-        throw new Error("Discord webhook URL is not defined in environment variables.");
+        throw new InternalServerError("Discord webhook URL is not defined in environment variables.");
     }
 
     const hook = new Webhook(webhookUrl);
@@ -29,6 +30,6 @@ export const sendDiscordMsg = async (roomName: string, qrCodeImgUrl: string) => 
                 ? error.message
                 : JSON.stringify(error);
 
-        throw new Error("Failed [Util] in [sendDiscordMsg] util : " + message);
+        throw new InternalServerError("Failed [Util] in [sendDiscordMsg] util : " + message);
     }
 }
