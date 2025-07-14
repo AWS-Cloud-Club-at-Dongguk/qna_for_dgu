@@ -1,5 +1,5 @@
 import QRCode from "qrcode";
-import { InternalServerError } from "@/common/errors/InternelServerError";
+import { InternalServerError } from "@/common/errors/InternalServerError";
 
 /**
  * Generates a QR code from the given text.

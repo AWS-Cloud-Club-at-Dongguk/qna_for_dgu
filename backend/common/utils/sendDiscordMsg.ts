@@ -1,5 +1,5 @@
 import { Webhook, MessageBuilder } from 'discord-webhook-node';
-import { InternalServerError } from "@/common/errors/InternelServerError";
+import { InternalServerError } from "@/common/errors/InternalServerError";
 
 /**
  * Utility function to send messages to a Discord channel.
