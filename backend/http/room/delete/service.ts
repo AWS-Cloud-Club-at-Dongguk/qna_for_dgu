@@ -10,6 +10,6 @@ export const deleteRoom = async (data: DeleteRoomRequest): Promise<void> => {
 
     const { roomId } = parsedData.data;
 
-    // 1. Delete the room from DynamoDB
+    // 2. Delete the room from DynamoDB
     await deleteRoomToDynamoDB(roomId);
 }
