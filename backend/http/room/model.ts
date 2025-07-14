@@ -27,8 +27,25 @@ export const createRoomResponseSchema = z.object({
 });
 
 
+/** ======================= Update/Delete Room HTTP API ======================= **/
+
+// Update Room에 대한 클라이언트 입력용 스키마
+export const updateRoomRequestSchema = z.object({
+    roomId: z.string(),
+    title: z.string().max(100, "Title must be at most 100 characters long"),
+});
+
+export const updateRoomResponseSchema = z.object({
+    title: z.string(),
+});
+
+
+
 /** ======================= Types ======================= **/
 
 export type CreateRoomRequest = z.infer<typeof createRoomRequestSchema>;
 export type Room = z.infer<typeof roomSchema>;
 export type CreateRoomResponse = z.infer<typeof createRoomResponseSchema>;
+
+export type UpdateRoomRequest = z.infer<typeof updateRoomRequestSchema>;
+export type UpdateRoomResponse = z.infer<typeof updateRoomResponseSchema>;
