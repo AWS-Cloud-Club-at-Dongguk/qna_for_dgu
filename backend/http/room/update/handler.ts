@@ -2,7 +2,6 @@
 import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult } from "aws-lambda";
 import { updateRoom } from "@/http/room/update/service";
 import { AppError } from "@/common/errors/AppError";
-import { updateRoomRequestSchema } from "@/http/room/model";
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     const body = JSON.parse(event.body || "{}");
