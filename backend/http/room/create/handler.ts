@@ -4,12 +4,6 @@ import { createRoom } from "@/http/room/create/service";
 import { AppError } from "@/common/errors/AppError";
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-    // Domain 설정
-    const DOMAIN =
-        process.env.NODE_ENV === "test"
-            ? process.env.DOMAIN_DEV
-            : process.env.DOMAIN_PROD;
-
     const body = JSON.parse(event.body || "{}");
 
     try {
