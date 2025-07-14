@@ -11,7 +11,7 @@ export const updateRoom = async (data: UpdateRoomRequest): Promise<UpdateRoomRes
 
     const { roomId, title } = parsedData.data;
 
-    // 3. Update the room title in DynamoDB
+    // 2. Update the room title in DynamoDB
     const updatedTitle = await updateRoomToDynamoDB(roomId, title);
 
     const responseBody: UpdateRoomResponse = {
