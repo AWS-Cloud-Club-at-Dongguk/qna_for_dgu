@@ -1,4 +1,4 @@
-import { ReturnValue, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
+import { UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 
 import { dynamo } from "@/common/constants/dynamo";
 import { TABLE_NAME_ROOM } from "@/common/constants/table";
