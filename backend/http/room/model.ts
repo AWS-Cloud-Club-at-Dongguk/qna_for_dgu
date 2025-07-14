@@ -29,6 +29,11 @@ export const createRoomResponseSchema = z.object({
 
 /** ======================= Update/Delete Room HTTP API ======================= **/
 
+// Delete Room에 대한 클라이언트 입력용 스키마
+export const deleteRoomRequestSchema = z.object({
+    roomId: z.string(),
+});
+
 // Update Room에 대한 클라이언트 입력용 스키마
 export const updateRoomRequestSchema = z.object({
     roomId: z.string(),
@@ -47,5 +52,6 @@ export type CreateRoomRequest = z.infer<typeof createRoomRequestSchema>;
 export type Room = z.infer<typeof roomSchema>;
 export type CreateRoomResponse = z.infer<typeof createRoomResponseSchema>;
 
+export type DeleteRoomRequest = z.infer<typeof deleteRoomRequestSchema>;
 export type UpdateRoomRequest = z.infer<typeof updateRoomRequestSchema>;
 export type UpdateRoomResponse = z.infer<typeof updateRoomResponseSchema>;
