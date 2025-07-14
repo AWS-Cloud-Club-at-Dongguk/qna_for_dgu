@@ -1,6 +1,6 @@
-import { UpdateItemCommand } from "@aws-sdk/client-dynamodb";
+import { UpdateCommand } from "@aws-sdk/lib-dynamodb";
 
-import { dynamo } from "@/common/constants/dynamo";
+import { docClient } from "@/common/constants/dynamo";
 import { TABLE_NAME_ROOM } from "@/common/constants/table";
 import { DatabaseError } from "@/common/errors/DatabaseError";
 import { NotFoundError } from "@/common/errors/NotFoundError";
@@ -9,18 +9,18 @@ export const updateRoomToDynamoDB = async (roomId: string, newTitle: string): Pr
     const params = {
         TableName: TABLE_NAME_ROOM,
         Key: {
-            roomId: { S: roomId },
+            roomId
         },
         UpdateExpression: "SET title = :newTitle",
         ExpressionAttributeValues: {
-            ":newTitle": { S: newTitle },
+            ":newTitle": newTitle
         },
         ReturnValues: "UPDATED_NEW" as const,
     };
 
     try {
-        const result = await dynamo.send(new UpdateItemCommand(params));
-        
+        const result = await docClient.send(new UpdateCommand(params));
+
         const updatedTitle = result.Attributes?.title?.S;
         if (!updatedTitle) {
             throw new NotFoundError(`NotFound [${roomId}] in [updateRoomTitleToDynamoDB] usecase`);

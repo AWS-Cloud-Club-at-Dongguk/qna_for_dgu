@@ -1,6 +1,6 @@
-import { DeleteItemCommand } from "@aws-sdk/client-dynamodb";
+import { DeleteCommand } from "@aws-sdk/lib-dynamodb";
 
-import { dynamo } from "@/common/constants/dynamo";
+import { docClient } from "@/common/constants/dynamo";
 import { TABLE_NAME_ROOM } from "@/common/constants/table";
 import { DatabaseError } from "@/common/errors/DatabaseError";
 
@@ -8,12 +8,12 @@ export const deleteRoomToDynamoDB = async (roomId: string): Promise<void> => {
     const params = {
         TableName: TABLE_NAME_ROOM,
         Key: {
-            roomId: { S: roomId },
+            roomId,
         },
     };
 
     try {
-        await dynamo.send(new DeleteItemCommand(params));
+        await docClient.send(new DeleteCommand(params));
     } catch (error: unknown) {
         const message = 
             error instanceof Error 
