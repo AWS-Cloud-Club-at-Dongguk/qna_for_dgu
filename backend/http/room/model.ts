@@ -22,7 +22,7 @@ export const roomSchema = createRoomRequestSchema.extend({
 
 // 3. Create Room에 대한 Response 스키마
 export const createRoomResponseSchema = z.object({
-    roomTitle: z.string(),
+    title: z.string(),
     qrCodeUrl: z.string(),
 });
 

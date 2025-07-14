@@ -15,7 +15,7 @@ describe("createRoom Lambda handler", () => {
         // parse를 해야 JSON이 올바르게 처리됨
         const parsedResponse = JSON.parse(response.body);
         expect(parsedResponse).toEqual({
-            roomTitle: expect.any(String),
+            title: expect.any(String),
             qrCodeUrl: expect.any(String),
         });
     });
