@@ -23,7 +23,7 @@ export const generatePresignedUrl = async (key: string, contentType: string): Pr
   return presignedUrl;
 };
 
-// Generate a presigned URL for public downloading an object from S3
+// Generate a presigned URL for temporarily downloading an object from S3
 export const generatePresignedGetUrl = async (key: string) => {
     const command = new GetObjectCommand({
         Bucket: process.env.AWS_S3_BUCKET_NAME!,
