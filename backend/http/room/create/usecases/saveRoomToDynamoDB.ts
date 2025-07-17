@@ -1,22 +1,25 @@
 import { Room } from "@/http/room/model";
-import { PutItemCommand } from "@aws-sdk/client-dynamodb";
+import { PutCommand } from "@aws-sdk/lib-dynamodb";
 
-import { dynamo } from "@/common/constants/dynamo";
+import { docClient } from "@/common/constants/dynamo";
 import { TABLE_NAME_ROOM } from "@/common/constants/table";
 import { DatabaseError } from "@/common/errors/DatabaseError";
 
 export const saveRoomToDynamoDB = async (room: Room): Promise<void> => {
+
+    const { roomId, title, createdAt, isActive } = room;
+    
     const item = {
-        roomId: { S: room.roomId },
-        title: { S: room.title },
-        createdAt: { S: room.createdAt },
-        isActive: { BOOL: room.isActive },
+        roomId,
+        title,
+        createdAt,
+        isActive,
     };
 
     // DynamoDB에 저장
     try {
-        await dynamo.send(
-            new PutItemCommand({
+        await docClient.send(
+            new  PutCommand({
                 TableName: TABLE_NAME_ROOM,
                 Item: item,
             })
