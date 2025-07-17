@@ -21,7 +21,7 @@ export const updateRoomToDynamoDB = async (roomId: string, newTitle: string): Pr
     try {
         const result = await docClient.send(new UpdateCommand(params));
 
-        const updatedTitle = result.Attributes?.title?.S;
+        const updatedTitle = result.Attributes?.title;
         if (!updatedTitle) {
             throw new NotFoundError(`NotFound [${roomId}] in [updateRoomTitleToDynamoDB] usecase`);
         }
