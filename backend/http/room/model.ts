@@ -44,7 +44,18 @@ export const updateRoomResponseSchema = z.object({
     title: z.string(),
 });
 
+/** ======================= Get Room Messages HTTP API ======================= **/
 
+const messageSchema = z.object({
+    messageId: z.string(),
+    content: z.string(),
+    timestamp: z.string(),
+    senderId: z.string(),
+});
+
+export const getRoomMessagesResponseSchema = z.object({
+    messages: z.array(messageSchema),
+});
 
 /** ======================= Types ======================= **/
 
@@ -55,3 +66,6 @@ export type CreateRoomResponse = z.infer<typeof createRoomResponseSchema>;
 export type DeleteRoomRequest = z.infer<typeof deleteRoomRequestSchema>;
 export type UpdateRoomRequest = z.infer<typeof updateRoomRequestSchema>;
 export type UpdateRoomResponse = z.infer<typeof updateRoomResponseSchema>;
+
+export type Message = z.infer<typeof messageSchema>;
+export type GetRoomMessagesResponse = z.infer<typeof getRoomMessagesResponseSchema>;

@@ -7,6 +7,7 @@ import {
   APIGatewayProxyResultV2,
   APIGatewayProxyWebsocketEventV2,
 } from "aws-lambda";
+import { v4 as uuidv4 } from 'uuid';
 
 import { docClient } from "@/common/constants/dynamo";
 import {
@@ -40,7 +41,8 @@ export const handler = async function (
       TableName: TABLE_NAME_MESSAGE,
       Item: {
         roomId,
-        message: message,
+        messageId: uuidv4(),
+        content: message,
         senderId: event.requestContext.connectionId,
         timestamp: new Date().toISOString(),
       },
