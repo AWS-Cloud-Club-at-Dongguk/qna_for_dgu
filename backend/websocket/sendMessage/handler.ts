@@ -51,6 +51,9 @@ export const handler = async function (
   const ddbcommand = new ScanCommand({
     TableName: TABLE_NAME_CONNECTION,
     FilterExpression: "#roomId = :roomId",
+    ExpressionAttributeNames: {
+      "#roomId": "roomId",
+    },
     ExpressionAttributeValues: {
       ":roomId": roomId,
     },
