@@ -7,7 +7,7 @@ import { APIGatewayProxyWebsocketEventV2 } from "aws-lambda";
 
 export const handler = async function (
   event: APIGatewayProxyWebsocketEventV2
-): Promise<any> {
+): Promise<APIGatewayProxyResultV2> {
   let connectionInfo;
   let connectionId = event.requestContext.connectionId;
 
