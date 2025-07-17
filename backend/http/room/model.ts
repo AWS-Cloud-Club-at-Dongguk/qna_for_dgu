@@ -49,7 +49,7 @@ export const updateRoomResponseSchema = z.object({
 const messageSchema = z.object({
     messageId: z.string(),
     content: z.string(),
-    createdAt: z.string(),
+    timestamp: z.string(),
     senderId: z.string(),
 });
 

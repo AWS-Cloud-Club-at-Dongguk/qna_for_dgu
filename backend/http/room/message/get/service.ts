@@ -13,7 +13,7 @@ export const getMessages = async (roomId: string): Promise<GetRoomMessagesRespon
         messages: messages.map(message => ({
             messageId: message.messageId,
             content: message.content,
-            createdAt: message.createdAt,
+            timestamp: message.timestamp,
             senderId: message.senderId,
         })),
     };
