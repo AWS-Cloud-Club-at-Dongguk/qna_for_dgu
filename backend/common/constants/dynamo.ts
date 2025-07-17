@@ -3,7 +3,7 @@ import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
 
 const dynamo = new DynamoDBClient({
   region: process.env.AWS_REGION!,
-  ...(process.env.NODE_ENV === "test" ? { endpoint: "http://localhost:8000" } : {}),
+  endpoint: process.env.DYNAMO_ENDPOINT!,
 });
 
 export const docClient = DynamoDBDocumentClient.from(dynamo);
