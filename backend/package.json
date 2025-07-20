@@ -12,7 +12,7 @@
     "room:create": "ts-node-esm @/http/room/create/handler.ts",
     "room:update": "ts-node-esm @/http/room/update/handler.ts",
     "room:delete": "ts-node-esm @/http/room/delete/handler.ts",
-    "ws:start": "./create-tables.sh && npx serverless offline start",
+    "ws:start": "./create-tables.sh && npx serverless offline --config serverless.local.yml",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
