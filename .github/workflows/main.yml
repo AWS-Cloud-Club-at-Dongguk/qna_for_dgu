@@ -3,7 +3,7 @@ name: Deploy to AWS
 on:
   push:
     branches:
-      - deploy/10-setup-deploy
+      - main
   
 jobs:
   deploy:
@@ -47,8 +47,6 @@ jobs:
         
       - name: Install Serverless CLI
         run: npm install -g serverless@3
-      - name: List files in backend
-        run: ls -al
 
       - name: Deploy to AWS
         run: sls deploy --config serverless.dev.yml
