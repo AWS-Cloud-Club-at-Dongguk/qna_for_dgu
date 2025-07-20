@@ -4,6 +4,9 @@ org: qnafordgu
 service: qnafordgu
 frameworkVersion: "3"
 
+plugins:
+  - serverless-offline
+
 provider:
   name: aws
   stage: dev
@@ -16,8 +19,12 @@ provider:
   # notificationArns:
   #   - arn:aws:sns:ap-northeast-2:123456789012:qnafordgu-dev-notification # SNS 알림 ARN
   timeout: 10
-  # profile: ${env:AWS_PROFILE} # AWS CLI 프로필 이름 (serverless 배포용)
+  profile: ${env:AWS_PROFILE} # AWS CLI 프로필 이름 (serverless 배포용)
   role: ${env:AWS_ROLE_ARN} # IAM Role ARN
+
+  # HTTP Api Gateway로 설정
+  httpApi:
+    payload: '2.0'
 
 functions:
 # Room 관련 핸들러
@@ -26,30 +33,30 @@ functions:
     handler: room/create/handler.handler
     role: ${env:AWS_ROLE_ARN}
     events:
-      - http:
+      - httpApi:
           method: post
-          path: rooms
+          path: /rooms
   updateRoomHandler:
     handler: room/update/handler.handler
     role: ${env:AWS_ROLE_ARN}
     events:
-      - http:
+      - httpApi:
           method: put
-          path: rooms/{id}
+          path: /rooms/{id}
   deleteRoomHandler:
     handler: room/delete/handler.handler
     role: ${env:AWS_ROLE_ARN}
     events:
-      - http:
+      - httpApi:
           method: delete
-          path: rooms/{id}
+          path: /rooms/{id}
   getRoomMessagesHandler:
     handler: room/messages/handler.handler
     role: ${env:AWS_ROLE_ARN}
     events:
-      - http:
+      - httpApi:
           method: get
-          path: rooms/{id}/messages
+          path: /rooms/{id}/messages
   # WebSocket API Gateway
   connectionHandler:
     handler: websocket/connect/handler.handler
