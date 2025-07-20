@@ -1,0 +1,79 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: qnafordgu
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: qnafordgu
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  stage: dev
+  runtime: nodejs20.x
+  region: ${env:AWS_REGION}
+  stackName: qnafordgu-dev # CloudFormation의 스택 이름
+  deploymentMethod: changesets # 변경 사항을 검토한 후 CloudFormation에 배포
+  deploymentBucket:
+    name: acc-dgu-qna-assets # S3 버킷 이름
+  # notificationArns:
+  #   - arn:aws:sns:ap-northeast-2:123456789012:qnafordgu-dev-notification # SNS 알림 ARN
+  timeout: 10
+  profile: ${env:AWS_PROFILE} # AWS CLI 프로필 이름 (serverless 배포용)
+  role: ${env:AWS_ROLE_ARN} # IAM Role ARN
+
+functions:
+# Room 관련 핸들러
+  # HTTP API Gateway
+  createRoomHandler:
+    handler: room/create/handler.handler
+    role: ${env:AWS_ROLE_ARN}
+    events:
+      - http:
+          method: post
+          path: rooms
+  updateRoomHandler:
+    handler: room/update/handler.handler
+    role: ${env:AWS_ROLE_ARN}
+    events:
+      - http:
+          method: put
+          path: rooms/{id}
+  deleteRoomHandler:
+    handler: room/delete/handler.handler
+    role: ${env:AWS_ROLE_ARN}
+    events:
+      - http:
+          method: delete
+          path: rooms/{id}
+  getRoomMessagesHandler:
+    handler: room/messages/handler.handler
+    role: ${env:AWS_ROLE_ARN}
+    events:
+      - http:
+          method: get
+          path: rooms/{id}/messages
+  # WebSocket API Gateway
+  connectionHandler:
+    handler: websocket/connect/handler.handler
+    role: ${env:AWS_ROLE_ARN}
+    events:
+      - websocket:
+          route: $connect
+  disconnectionHandler:
+    handler: websocket/disconnect/handler.handler
+    role: ${env:AWS_ROLE_ARN}
+    events:
+      - websocket:
+          route: $disconnect
+  sendMessageHandler:
+    handler: websocket/sendMessage/handler.handler
+    role: ${env:AWS_ROLE_ARN}
+    events:
+      - websocket:
+          route: sendMessage
+  defaultHandler:
+    handler: websocket/default/handler.handler
+    role: ${env:AWS_ROLE_ARN}
+    events:
+      - websocket:
+          route: $default
