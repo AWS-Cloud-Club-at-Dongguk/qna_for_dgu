@@ -5,7 +5,7 @@ import { AppError } from "@/common/errors/AppError";
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     const body = JSON.parse(event.body || "{}");
-    const roomId = event.queryStringParameters?.id;
+    const roomId = event.pathParameters?.id;
 
     if (!roomId) {
         return {
