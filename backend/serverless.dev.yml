@@ -15,7 +15,7 @@ provider:
   # notificationArns:
   #   - arn:aws:sns:ap-northeast-2:123456789012:qnafordgu-dev-notification # SNS 알림 ARN
   timeout: 10
-  profile: ${env:AWS_PROFILE} # AWS CLI 프로필 이름 (serverless 배포용)
+  # profile: ${env:AWS_PROFILE} # AWS CLI 프로필 이름 (serverless 배포용)
   role: ${env:AWS_ROLE_ARN} # IAM Role ARN
 
 functions:
