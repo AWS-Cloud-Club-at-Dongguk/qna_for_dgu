@@ -3,9 +3,6 @@ org: qnafordgu
 # "service" is the name of this project. This will also be added to your AWS resource names.
 service: qnafordgu
 
-plugins:
-  - serverless-offline
-
 provider:
   name: aws
   stage: dev
