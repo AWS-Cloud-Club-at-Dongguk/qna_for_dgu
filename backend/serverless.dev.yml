@@ -2,6 +2,7 @@
 org: qnafordgu
 # "service" is the name of this project. This will also be added to your AWS resource names.
 service: qnafordgu
+frameworkVersion: "3"
 
 provider:
   name: aws
