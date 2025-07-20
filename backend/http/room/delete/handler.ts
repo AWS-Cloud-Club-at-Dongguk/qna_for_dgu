@@ -4,11 +4,20 @@ import { deleteRoom } from "@/http/room/delete/service";
 import { AppError } from "@/common/errors/AppError";
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-    const body = JSON.parse(event.body || "{}");
+    const roomId = event.queryStringParameters?.roomId;
+
+    if (!roomId) {
+        return {
+            statusCode: 400,
+            body: JSON.stringify({
+                message: "Room ID is required"
+            })
+        };
+    }
 
     try {
-        await deleteRoom(body);
-        
+        await deleteRoom(roomId);
+
         return {
             statusCode: 204, // No Content
             body: ""
