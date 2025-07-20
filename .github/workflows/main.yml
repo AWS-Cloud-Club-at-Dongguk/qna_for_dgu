@@ -47,6 +47,8 @@ jobs:
         
       - name: Install Serverless CLI
         run: npm install -g serverless
+      - name: List files in backend
+        run: ls -al
 
       - name: Deploy to AWS via Serverless Dashboard
         uses: serverless/github-action@v3.2
