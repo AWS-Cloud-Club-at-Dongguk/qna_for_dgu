@@ -4,7 +4,7 @@ import { getMessages } from "@/http/room/message/get/service";
 import { AppError } from "@/common/errors/AppError";
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-    const roomId = event.pathParameters?.roomId;
+    const roomId = event.pathParameters?.id;
 
     if (!roomId) {
         return {

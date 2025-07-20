@@ -4,7 +4,7 @@ import { deleteRoom } from "@/http/room/delete/service";
 import { AppError } from "@/common/errors/AppError";
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-    const roomId = event.queryStringParameters?.roomId;
+    const roomId = event.queryStringParameters?.id;
 
     if (!roomId) {
         return {
