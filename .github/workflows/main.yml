@@ -49,7 +49,7 @@ jobs:
         run: npm install -g serverless@3
 
       - name: Deploy to AWS
-        run: sls deploy --config serverless.dev.yml
+        run: npx serverless deploy --config serverless.dev.yml
         env:
           SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_SERVERLESS_DEPLOYMENT_ACCESS_KEY }}
