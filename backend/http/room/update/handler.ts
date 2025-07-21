@@ -5,9 +5,19 @@ import { AppError } from "@/common/errors/AppError";
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     const body = JSON.parse(event.body || "{}");
+    const roomId = event.pathParameters?.id;
+
+    if (!roomId) {
+        return {
+            statusCode: 400,
+            body: JSON.stringify({
+                message: "Room ID is required"
+            })
+        };
+    }
 
     try {
-        const response = await updateRoom(body);
+        const response = await updateRoom(roomId, body);
         
         return {
             statusCode: 200,

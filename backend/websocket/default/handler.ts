@@ -3,7 +3,7 @@ import {
   PostToConnectionCommand,
   GetConnectionCommand,
 } from "@aws-sdk/client-apigatewaymanagementapi";
-import { APIGatewayProxyWebsocketEventV2 } from "aws-lambda";
+import { APIGatewayProxyResultV2, APIGatewayProxyWebsocketEventV2 } from "aws-lambda";
 
 export const handler = async function (
   event: APIGatewayProxyWebsocketEventV2

@@ -1,0 +1,60 @@
+name: Deploy to AWS
+
+on:
+  push:
+    branches:
+      - main
+  
+jobs:
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: # matrix 병렬 실행
+        node-version: [20] # workflow 1. node.js 20.x에서 1회 실행
+
+    defaults:
+      run:
+        working-directory: backend # 모든 run 명령어에 공통 적용
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: |
+          npm ci # install 대신 ci 사용
+
+      - name: Build project
+        run: |
+          npm run build # ts 프로젝트 빌드
+
+      ## serverless framework에 배포하는 경우
+      # - name: serverless deploy
+      # - uses: serverless/github-action@v3.2
+      #  with:
+      #    args: deploy
+      #  env:
+      #    SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY } }
+        
+      - name: Install Serverless CLI
+        run: npm install -g serverless@3
+
+      - name: Deploy to AWS
+        run: npx serverless deploy --config serverless.dev.yml
+        env:
+          SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_SERVERLESS_DEPLOYMENT_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SERVERLESS_DEPLOYMENT_SECRET_KEY }}
+          AWS_ROLE_ARN: ${{ secrets.AWS_SERVERLESS_DEPLOYMENT_ROLE_ARN }} # IAM Role ARN
+          TABLE_NAME_ROOM: ${{ secrets.TABLE_NAME_ROOM }}
+          TABLE_NAME_CONNECTION: ${{ secrets.TABLE_NAME_CONNECTION }}
+          TABLE_NAME_MESSAGE: ${{ secrets.TABLE_NAME_MESSAGE }}
+
+      - name: Prune dev dependencies
+        run: npm prune --omit=dev # devDependencies 제거

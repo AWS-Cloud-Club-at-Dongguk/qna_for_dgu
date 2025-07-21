@@ -1,0 +1,159 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: qnafordgu
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: qnafordgu
+frameworkVersion: "3"
+
+plugins:
+  - serverless-esbuild
+  - serverless-dotenv-plugin
+
+package:
+  individually: true # 각 함수별로 패키징
+
+custom:
+  esbuild:
+    bundle: true # esbuild 번들링
+    minify: true # 코드 압축
+    target: "node20" # Node.js 20.x 타겟
+    platform: "node" # Node.js 플랫폼
+    # external: ["aws-sdk"] # aws-sdk는 AWS Lambda에서 기본 제공하므로 외부화
+    # define: { "require.resolve": undefined } # require.resolve 사용 안함
+    # sourcemap: true # 소스맵 생성
+    # concurrency: 10 # default 는 3
+
+provider:
+  name: aws
+  stage: dev
+  runtime: nodejs20.x
+  region: ap-northeast-2
+  stackName: qnafordgu-dev # CloudFormation의 스택 이름
+  deploymentMethod: changesets # 변경 사항을 검토한 후 CloudFormation에 배포
+  deploymentBucket:
+    name: acc-dgu-qna-assets # S3 버킷 이름
+  # notificationArns:
+  #   - arn:aws:sns:ap-northeast-2:123456789012:qnafordgu-dev-notification # SNS 알림 ARN
+  timeout: 10
+  # profile: ${env:AWS_PROFILE} # AWS CLI 프로필 이름 (serverless 배포용)
+  role: ${env:AWS_ROLE_ARN} # IAM Role ARN
+
+  # HTTP Api Gateway로 설정
+  httpApi:
+    payload: '2.0'
+
+functions:
+# Room 관련 핸들러
+  # HTTP API Gateway
+  createRoomHandler:
+    handler: http/room/create/handler.handler
+    role: ${env:AWS_ROLE_ARN}
+    logRetentionInDays: 3 # 로그 보존 기간 (3일)
+    events:
+      - httpApi:
+          method: post
+          path: /rooms
+  updateRoomHandler:
+    handler: http/room/update/handler.handler
+    role: ${env:AWS_ROLE_ARN}
+    logRetentionInDays: 3
+    events:
+      - httpApi:
+          method: put
+          path: /rooms/{id}
+  deleteRoomHandler:
+    handler: http/room/delete/handler.handler
+    role: ${env:AWS_ROLE_ARN}
+    logRetentionInDays: 3
+    events:
+      - httpApi:
+          method: delete
+          path: /rooms/{id}
+  getRoomMessagesHandler:
+    handler: http/room/message/get/handler.handler
+    role: ${env:AWS_ROLE_ARN}
+    logRetentionInDays: 3
+    events:
+      - httpApi:
+          method: get
+          path: /rooms/{id}/messages
+  # WebSocket API Gateway
+  connectionHandler:
+    handler: websocket/connect/handler.handler
+    role: ${env:AWS_ROLE_ARN}
+    logRetentionInDays: 3
+    events:
+      - websocket:
+          route: $connect
+  disconnectionHandler:
+    handler: websocket/disconnect/handler.handler
+    role: ${env:AWS_ROLE_ARN}
+    logRetentionInDays: 3
+    events:
+      - websocket:
+          route: $disconnect
+  sendMessageHandler:
+    handler: websocket/sendMessage/handler.handler
+    role: ${env:AWS_ROLE_ARN}
+    logRetentionInDays: 3
+    events:
+      - websocket:
+          route: sendMessage
+  defaultHandler:
+    handler: websocket/default/handler.handler
+    role: ${env:AWS_ROLE_ARN}
+    logRetentionInDays: 3
+    events:
+      - websocket:
+          route: $default
+
+resources:
+  Resources:
+    # DynamoDB 테이블 생성
+    RoomTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${env:TABLE_NAME_ROOM}
+        AttributeDefinitions:
+          - AttributeName: roomId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: roomId
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST # 온디맨드 요금제
+        Tags:
+          - Key: Name
+            Value: ${env:TABLE_NAME_ROOM}
+    
+    ConnectionTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${env:TABLE_NAME_CONNECTION}
+        AttributeDefinitions:
+          - AttributeName: connectionId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: connectionId
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        Tags:
+          - Key: Name
+            Value: ${env:TABLE_NAME_CONNECTION}
+    
+    MessageTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${env:TABLE_NAME_MESSAGE}
+        AttributeDefinitions:
+          - AttributeName: roomId
+            AttributeType: S
+          - AttributeName: messageId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: roomId
+            KeyType: HASH
+          - AttributeName: messageId
+            KeyType: RANGE # 시간순 정렬의 기준
+        BillingMode: PAY_PER_REQUEST
+        Tags:
+          - Key: Name
+            Value: ${env:TABLE_NAME_MESSAGE}

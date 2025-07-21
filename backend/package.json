@@ -12,8 +12,9 @@
     "room:create": "ts-node-esm @/http/room/create/handler.ts",
     "room:update": "ts-node-esm @/http/room/update/handler.ts",
     "room:delete": "ts-node-esm @/http/room/delete/handler.ts",
-    "ws:start": "./create-tables.sh && npx serverless offline start",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "ws:start": "./create-tables.sh && npx serverless offline --config serverless.local.yml",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --project tsconfig.json"
   },
   "repository": {
     "type": "git",
@@ -44,9 +45,13 @@
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
+    "esbuild": "^0.25.8",
     "jest": "^29.7.0",
+    "serverless": "^3.40.0",
+    "serverless-dotenv-plugin": "^6.0.0",
     "serverless-dynamodb-local": "^0.2.40",
-    "serverless-offline": "^14.4.0",
+    "serverless-esbuild": "^1.55.1",
+    "serverless-offline": "^13.9.0",
     "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0"
