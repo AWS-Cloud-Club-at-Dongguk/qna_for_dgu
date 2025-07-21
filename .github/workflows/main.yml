@@ -3,7 +3,7 @@ name: Deploy to AWS
 on:
   push:
     branches:
-      - main
+      - deploy/10-setup-deploy
   
 jobs:
   deploy:
@@ -55,3 +55,6 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_SERVERLESS_DEPLOYMENT_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SERVERLESS_DEPLOYMENT_SECRET_KEY }}
           AWS_ROLE_ARN: ${{ secrets.AWS_SERVERLESS_DEPLOYMENT_ROLE_ARN }} # IAM Role ARN
+          TABLE_NAME_ROOM: ${{ secrets.TABLE_NAME_ROOM }}
+          TABLE_NAME_CONNECTION: ${{ secrets.TABLE_NAME_CONNECTION }}
+          TABLE_NAME_MESSAGE: ${{ secrets.TABLE_NAME_MESSAGE }}
