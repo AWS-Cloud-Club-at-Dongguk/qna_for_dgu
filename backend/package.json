@@ -49,6 +49,7 @@
     "serverless": "^3.40.0",
     "serverless-dotenv-plugin": "^6.0.0",
     "serverless-dynamodb-local": "^0.2.40",
+    "serverless-esbuild": "^1.55.1",
     "serverless-offline": "^13.9.0",
     "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",
