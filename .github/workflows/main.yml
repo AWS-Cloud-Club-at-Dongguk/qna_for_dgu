@@ -34,9 +34,6 @@ jobs:
         run: |
           npm run build # ts 프로젝트 빌드
 
-      - name: Prune dev dependencies
-        run: npm prune --omit=dev # devDependencies 제거
-
       ## serverless framework에 배포하는 경우
       # - name: serverless deploy
       # - uses: serverless/github-action@v3.2
@@ -58,3 +55,6 @@ jobs:
           TABLE_NAME_ROOM: ${{ secrets.TABLE_NAME_ROOM }}
           TABLE_NAME_CONNECTION: ${{ secrets.TABLE_NAME_CONNECTION }}
           TABLE_NAME_MESSAGE: ${{ secrets.TABLE_NAME_MESSAGE }}
+
+      - name: Prune dev dependencies
+        run: npm prune --omit=dev # devDependencies 제거
