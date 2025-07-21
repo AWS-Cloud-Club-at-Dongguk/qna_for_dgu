@@ -27,4 +27,4 @@ dist-ssr
 .env
 
 # .vscode setting
-.vscode/settings.json
+.vscode
