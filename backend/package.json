@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
+    "esbuild": "^0.25.8",
     "jest": "^29.7.0",
     "serverless": "^3.40.0",
     "serverless-dotenv-plugin": "^6.0.0",
