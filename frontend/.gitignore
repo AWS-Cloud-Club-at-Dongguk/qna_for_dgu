@@ -23,4 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 
-package-lock.json
+# environment variables
+.env
+
+# .vscode setting
+.vscode/settings.json
