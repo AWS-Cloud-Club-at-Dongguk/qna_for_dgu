@@ -1,0 +1,119 @@
+@import 'tailwindcss';
+
+@font-face {
+    font-family: 'AmazonEmber';
+    src: url('/fonts/AmazonEmberDisplay_Rg.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'AmazonEmber';
+    src: url('/fonts/AmazonEmberDisplay_Bd.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* Theme variables: tailwind.config.js 없이도 global token 관리 */
+@theme {
+    /* Colors */
+    /* === Core Brand Colors === */
+    --color-primary: #f8901f; /* 브랜드 주색상 (예: 동국오렌지) */
+    --color-secondary: #93847c; /* 보조 색상 */
+    --color-accent: #fdbe0f; /* 강조색 (버튼 등) */
+
+    /* === Semantic State Colors === */
+    --color-success: #10b981; /* 성공: 초록 */
+    --color-error: #ef4444; /* 실패/에러: 빨강 */
+    --color-warning: #fbbf24; /* 경고: 노랑 */
+    --color-info: #3b82f6; /* 정보: 파랑 */
+    --color-muted: #9ca3af; /* 설명 텍스트/비활성 등 */
+
+    /* === UI Interaction === */
+    --color-hover: #e07c0e; /* 버튼 hover 시 (primary 기반 어둡게) */
+    --color-disabled: #e5e7eb; /* 비활성 상태 */
+    --color-loading: #f3f4f6; /* 로딩 인디케이터 배경 */
+
+    /* === Base Colors === */
+    --color-white: #ffffff;
+    --color-black: #000000;
+
+    --color-white-soft: #f9fafb;
+    --color-black-soft: #1f2937;
+    --color-black-true: #111827;
+
+    /* Font */
+    --font-sans: 'AmazonEmber', sans-serif;
+
+    /* Screens (for custom responsive control) */
+    --screen-xs: 480px; /* Extra small mobile devices (e.g., phones) */
+    --screen-sm: 640px; /* general mobile devices */
+    --screen-md: 768px; /* Medium devices (e.g., tablets) */
+    --screen-lg: 1024px; /* Large devices (e.g., desktops) */
+    --screen-xl: 1280px; /* Extra large devices (e.g., large desktops) */
+    --screen-2xl: 1536px; /* 2X large devices (e.g., large screens) */
+}
+
+/* Base reset */
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply font-sans text-gray-900 bg-white;
+    }
+
+    a {
+        @apply text-[--color-primary] hover:underline transition-colors;
+    }
+
+    button {
+        @apply focus:outline-none focus:ring-2 focus:ring-[--color-primary];
+    }
+}
+
+/* Responsive utilities by screen range */
+@layer utilities {
+    /* Extra: breakpoint helpers */
+    .mobile-only {
+        @apply block sm:hidden;
+    }
+
+    .tablet-only {
+        @apply hidden md:block lg:hidden;
+    }
+
+    .desktop-only {
+        @apply hidden lg:block;
+    }
+
+    .max-sm\:text-sm {
+        @apply text-sm sm:text-base;
+    }
+
+    .md-only\:bg-gray-100 {
+        @apply bg-gray-100 md:bg-inherit lg:bg-inherit;
+    }
+
+    .xs\:hidden {
+        @media (min-width: 480px) {
+            display: none;
+        }
+    }
+
+    .animate-fade-in {
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
