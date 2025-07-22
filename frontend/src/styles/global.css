@@ -1,17 +1,17 @@
 @import 'tailwindcss';
 
 @font-face {
-  font-family: 'AmazonEmber';
-  src: url('/fonts/AmazonEmberDisplay_Rg.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
+    font-family: 'AmazonEmber';
+    src: url('/fonts/AmazonEmberDisplay_Rg.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
 }
 
 @font-face {
-  font-family: 'AmazonEmber';
-  src: url('/fonts/AmazonEmberDisplay_Bd.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
+    font-family: 'AmazonEmber';
+    src: url('/fonts/AmazonEmberDisplay_Bd.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
 }
 
 /* Theme variables: tailwind.config.js 없이도 global token 관리 */
@@ -99,6 +99,21 @@
     .xs\:hidden {
         @media (min-width: 480px) {
             display: none;
+        }
+    }
+
+    .animate-fade-in {
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
         }
     }
 }
