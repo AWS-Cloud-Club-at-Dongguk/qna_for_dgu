@@ -1,12 +1,17 @@
-import { Outlet } from "react-router-dom";
+import { Outlet } from 'react-router-dom'
+import TopNav from '@/shared/components/common/TopNav'
+import Footer from '@/shared/components/common/Footer'
 
 const Layout = () => (
-    <div className="flex flex-col h-screen">
-      <nav className="bg-white shadow px-6 py-4">QnA Title</nav>
-      <main className="flex-1 bg-gray-100 overflow-y-auto">
-        <Outlet />
-      </main>
+    <div className="flex flex-col w-screen h-screen bg-white">
+        <div className="flex flex-col flex-1 max-w-screen-lg w-full h-full mx-auto bg-white">
+            <TopNav />
+            <main className="flex-1 overflow-y-auto">
+                <Outlet />
+            </main>
+            <Footer />
+        </div>
     </div>
 )
 
-export default Layout;
+export default Layout
