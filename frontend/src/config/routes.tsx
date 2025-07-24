@@ -7,7 +7,7 @@ const routes = [
         element: <Layout />, // 이 안에 Outlet이 있어야 함
         children: [
             {
-                path: '',
+                path: 'room/:roomId',
                 element: <RoomChatPage />,
             },
         ],
