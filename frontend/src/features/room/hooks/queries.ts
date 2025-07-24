@@ -9,7 +9,7 @@ import {
 
 /** Rooms */
 /** 1. Room info 조회 */
-export const useChatRoomList = () => {
+export const useChatRoomInfo = () => {
     return useQuery<ChatRoomInfoDto>({
         queryKey: ['chatRooms'],
         queryFn: () => httpClient.get('rooms'),
@@ -19,7 +19,7 @@ export const useChatRoomList = () => {
 }
 
 /** 2. 질문방 메시지 조회 */
-export const useChatRoomInfo = (roomId: string) => {
+export const useChatRoomMessages = (roomId: string) => {
     return useQuery({
         queryKey: ['chatMessages', roomId],
         queryFn: () =>
