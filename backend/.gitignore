@@ -8,3 +8,5 @@ dist
 .dynamodb/
 
 .build/
+
+iam-policy-updated.json
