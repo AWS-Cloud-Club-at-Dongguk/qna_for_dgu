@@ -1,8 +1,9 @@
-import { useRoutes } from "react-router-dom"
-import { routes } from "@/config/routes"
+import { useRoutes } from 'react-router-dom'
+import routes from '@/config/routes'
+import { AppProvider } from '@/provider/AppProvider'
 
 function App() {
-    return useRoutes(routes)
+    return <AppProvider>{useRoutes(routes)}</AppProvider>
 }
 
 export default App

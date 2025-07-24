@@ -28,6 +28,8 @@
     --color-warning: #fbbf24; /* 경고: 노랑 */
     --color-info: #3b82f6; /* 정보: 파랑 */
     --color-muted: #9ca3af; /* 설명 텍스트/비활성 등 */
+    --color-muted-light: #d1d5db; /* 밝은 설명 텍스트/비활성 등 */
+    --color-muted-dark: #6b7280; /* 어두운 설명 텍스트/비활성 등 */
 
     /* === UI Interaction === */
     --color-hover: #e07c0e; /* 버튼 hover 시 (primary 기반 어둡게) */
@@ -41,6 +43,7 @@
     --color-white-soft: #f9fafb;
     --color-black-soft: #1f2937;
     --color-black-true: #111827;
+    --color-svg-gray: #808080;
 
     /* Font */
     --font-sans: 'AmazonEmber', sans-serif;
@@ -65,17 +68,17 @@
     }
 
     a {
-        @apply text-[--color-primary] hover:underline transition-colors;
+        @apply text-primary hover:underline transition-colors;
     }
 
     button {
-        @apply focus:outline-none focus:ring-2 focus:ring-[--color-primary];
+        @apply focus:outline-none;
     }
 }
 
-/* Responsive utilities by screen range */
+/* Responsive utilities */
 @layer utilities {
-    /* Extra: breakpoint helpers */
+    /* screen range */
     .mobile-only {
         @apply block sm:hidden;
     }
@@ -115,5 +118,31 @@
             opacity: 1;
             transform: translateY(0);
         }
+    }
+
+    /** Hover effects */
+    .hover-size-up {
+        @apply transition-transform duration-150 ease-in-out transform hover:scale-105;
+    }
+}
+
+@layer components {
+    /** input fields */
+
+    .chat-input-field {
+        @apply px-3 py-2 text-base transition leading-[1.5] placeholder:align-middle focus:outline-none focus:placeholder:text-primary placeholder:text-muted;
+    }
+
+    .chat-input-field-b-line {
+        @apply absolute bottom-0 left-0 w-full h-[2px] scale-x-0 bg-primary transition-transform duration-300 origin-left peer-focus:scale-x-100;
+    }
+
+    /** buttons */
+    .text-button {
+        @apply text-sm transition font-medium text-white bg-primary hover:bg-hover px-4 py-2 rounded disabled:bg-disabled disabled:cursor-not-allowed disabled:text-muted
+    }
+
+    .icon-button {
+        @apply transition font-medium text-white bg-primary hover:bg-hover px-2 py-2 rounded disabled:bg-disabled disabled:cursor-not-allowed;
     }
 }
