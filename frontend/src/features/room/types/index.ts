@@ -8,7 +8,7 @@ export interface ChatRoomInfoDto {
 }
 
 export interface ChatMessageDto {
-    id: string
+    messageId: string,
     nickname: string
     content: string
     timestamp: string

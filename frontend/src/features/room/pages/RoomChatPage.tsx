@@ -52,7 +52,7 @@ function RoomChatPage() {
         if (socketRef.current) {
             // 내 메시지 즉시 화면에 표시
             const myMsg = {
-                id: Math.random().toString(), // Add a unique id
+                messageId: Math.random().toString(), // Add a unique id
                 nickname: 'Me',
                 content,
                 timestamp: new Date().toISOString(),
@@ -87,7 +87,7 @@ function RoomChatPage() {
 
         setMessages((prev) =>
             prev.map((msg) =>
-                msg.id === id
+                msg.messageId === id
                     ? { ...msg, likes: msg.likes + (alreadyLiked ? -1 : 1) }
                     : msg
             )
@@ -106,7 +106,7 @@ function RoomChatPage() {
             const data = JSON.parse(event.data)
             if (data.type === 'message') {
                 const newMsg = {
-                    id: data.id,
+                    messageId: data.id,
                     nickname: data.nickname,
                     content: data.message,
                     timestamp: data.timestamp || new Date().toISOString(),
@@ -142,7 +142,7 @@ function RoomChatPage() {
                 }>(`rooms/${roomId}/messages`)
 
                 const loadedMessages = data.messages.map((msg) => ({
-                    id: msg.id,
+                    messageId: msg.messageId,
                     nickname: msg.nickname ?? 'Anonymous',
                     content: msg.content,
                     timestamp: msg.timestamp,
