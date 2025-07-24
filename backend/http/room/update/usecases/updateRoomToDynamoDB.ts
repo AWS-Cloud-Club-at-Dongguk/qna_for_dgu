@@ -27,6 +27,11 @@ export const updateRoomToDynamoDB = async (roomId: string, data: UpdateRoomReque
         expressionAttributeValues[':newBannerUrl'] = data.bannerUrl;
     }
 
+    // 필드가 하나도 없으면 예외 처리
+    if (updateFields.length === 0) {
+        throw new DatabaseError('No fields provided for update')
+    }
+
     const params = {
         TableName: TABLE_NAME_ROOM,
         Key: {
