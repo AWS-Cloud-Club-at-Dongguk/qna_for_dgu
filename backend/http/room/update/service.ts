@@ -9,7 +9,7 @@ export const updateRoom = async (roomId: string, data: UpdateRoomRequest): Promi
         throw new BadRequestError("Bad Request in [updateRoom] service: " + JSON.stringify(parsedData.error.format()));
     }
 
-    const { title } = parsedData.data;
+// Removed unused destructuring of `title` from `parsedData.data`.
 
     // 2. Update the room title in DynamoDB
     const updatedTitle = await updateRoomToDynamoDB(roomId, data);
