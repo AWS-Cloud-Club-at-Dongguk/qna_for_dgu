@@ -45,7 +45,7 @@ export const handler = async function (
       Item: {
         roomId,
         messageId,
-        nickname: nickname,
+        nickname,
         content: message,
         senderId: event.requestContext.connectionId,
         timestamp: timestamp,
