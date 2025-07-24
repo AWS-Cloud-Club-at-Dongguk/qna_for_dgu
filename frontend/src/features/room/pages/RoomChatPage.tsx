@@ -193,7 +193,7 @@ function RoomChatPage() {
                 >
                     {messages.map((msg) => (
                         <MessageCard
-                            key={msg.id}
+                            key={msg.messageId}
                             message={msg}
                             onLike={likeMessage}
                             isNew={false}
