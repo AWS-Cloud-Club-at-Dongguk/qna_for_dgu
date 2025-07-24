@@ -7,16 +7,18 @@ import ChatInput from '@/features/room/components/ChatInput'
 import NewMessageCard from '@/features/room/components/NewMessageCard'
 import { ChatMessageData } from '@/features/room/types'
 
-const RoomChatPage = () => {
+function RoomChatPage() {
     const [messages, setMessages] = useState<ChatMessageData[]>([])
     const [nickname, setNickname] = useState('')
-    const [unreadMessage, setUnreadMessage] = useState<ChatMessageData | null>(null)
+    const [unreadMessage, setUnreadMessage] = useState<ChatMessageData | null>(
+        null
+    )
     const [like, setLike] = useState<{ [key: string]: boolean }>({})
     const { isReadMode } = useChatRoomReadMode()
     const scrollRef = useRef<HTMLDivElement>(null)
 
-    const [searchParams, setSearchParams] = useSearchParams();
-    const roomId = searchParams.get('roomId') || '';
+    const [searchParams, setSearchParams] = useSearchParams()
+    const roomId = searchParams.get('roomId') || ''
 
     const SCROLL_THRESHOLD = 50 // 스크롤이 이 거리보다 가까우면 자동 스크롤
 

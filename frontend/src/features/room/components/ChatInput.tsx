@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import RightPlaneIcon from '@/assets/icons/right_plane.svg?react'
 
-const ChatInput = ({
+function ChatInput({
     nickname,
     onNicknameChange,
     onSend,
@@ -9,7 +9,7 @@ const ChatInput = ({
     nickname: string
     onNicknameChange: (val: string) => void
     onSend: (content: string) => void
-}) => {
+}) {
     const [content, setContent] = useState('')
     const textareaRef = useRef<HTMLTextAreaElement>(null)
 

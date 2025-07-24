@@ -6,10 +6,5 @@ import svgr from 'vite-plugin-svgr'
 
 // https://vite.dev/config/
 export default defineConfig({
-    plugins: [
-        react(), 
-        tsconfigPaths(),
-        tailwindcss(),
-        svgr()
-    ],
+    plugins: [react(), tsconfigPaths(), tailwindcss(), svgr()],
 })

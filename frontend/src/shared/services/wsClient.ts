@@ -23,9 +23,9 @@ const wsClient: WsClient = {
         onError?: (error: Event) => void
     ) => {
         const queryString = new URLSearchParams(params).toString()
-        const requestUrl =
-            `${WS_BASE_URL}/${STAGE}/${path}` +
-            (queryString ? `?${queryString}` : '')
+        const requestUrl = `${WS_BASE_URL}/${STAGE}/${path}${
+            queryString ? `?${queryString}` : ''
+        }`
         const socket = new WebSocket(requestUrl)
 
         socket.onopen = () => {

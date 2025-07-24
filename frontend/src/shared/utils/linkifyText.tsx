@@ -1,4 +1,4 @@
-const urlRegex = /(https?:\/\/[^\s]+)/g;
+const urlRegex = /(https?:\/\/[^\s]+)/g
 
 function linkifyText(text: string): (string | React.ReactNode)[] {
     return text.split(urlRegex).map((part, i) => {

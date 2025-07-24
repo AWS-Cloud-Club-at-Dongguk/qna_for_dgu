@@ -1,7 +1,7 @@
 import formatTime from '@/shared/utils/formatTime'
-import { ChatMessageData} from '@/features/room/types'
+import { ChatMessageData } from '@/features/room/types'
 
-const NewMessageCard = ({ message }: { message: ChatMessageData }) => {
+function NewMessageCard({ message }: { message: ChatMessageData }) {
     return (
         <div className="w-full mx-auto bg-white/50 backdrop-blur-md p-6 cursor-pointer transition hover:bg-white/100">
             <div className="absolute -top-4 left-5 flex items-center gap-1 bg-primary text-white-soft text-sm font-bold px-2 py-1 rounded-full">

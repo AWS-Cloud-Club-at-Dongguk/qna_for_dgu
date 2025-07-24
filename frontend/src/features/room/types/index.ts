@@ -30,7 +30,7 @@ export type ChatMessageData = ChatMessageDto & {
     isLiked: boolean
 }
 
-export type ChatRoomInfoData = ChatRoomInfoDto;
+export type ChatRoomInfoData = ChatRoomInfoDto
 
 export type ChatMessageListData = ChatMessageData[]
 

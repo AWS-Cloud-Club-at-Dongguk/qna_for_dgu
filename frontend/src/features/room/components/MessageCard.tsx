@@ -10,7 +10,7 @@ type Props = {
     isNew: boolean
 }
 
-const MessageCard = ({ message, onLike, isNew }: Props) => {
+function MessageCard({ message, onLike, isNew }: Props) {
     const formattedTime = formatTime(message.createdAt)
 
     return (
@@ -36,6 +36,7 @@ const MessageCard = ({ message, onLike, isNew }: Props) => {
                         {linkifyText(message.content)}
                     </p>
                     <button
+                        type="button"
                         onClick={() => onLike(message.id)}
                         className="text-sm text-muted font-medium inline-flex items-center gap-1"
                     >

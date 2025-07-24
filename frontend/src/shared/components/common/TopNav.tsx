@@ -2,7 +2,7 @@ import { useChatRoomReadMode } from '@/context/ChatModeContext'
 import { useChatQuestionCount } from '@/context/ChatQuestionCountContext'
 import { useTopNav } from '@/context/TopNavContext'
 
-const TopNav = () => {
+function TopNav() {
     const { isReadMode, setIsReadMode } = useChatRoomReadMode()
     const { title, description, bannerUrl, iconUrl } = useTopNav()
     const { questionCount } = useChatQuestionCount()

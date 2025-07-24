@@ -15,9 +15,9 @@ const httpClient: HttpClient = {
         params?: Record<string, any>
     ): Promise<T> => {
         const queryString = new URLSearchParams(params).toString()
-        const requestUrl =
-            `${HTTP_BASE_URL}/${VERSION}/${STAGE}/${path}` +
-            (queryString ? `?${queryString}` : '')
+        const requestUrl = `${HTTP_BASE_URL}/${VERSION}/${STAGE}/${path}${
+            queryString ? `?${queryString}` : ''
+        }`
 
         const response = await fetch(requestUrl, {
             method: 'GET',

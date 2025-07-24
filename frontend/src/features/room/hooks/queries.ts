@@ -1,10 +1,7 @@
 // query 모음
 import { useQuery } from '@tanstack/react-query'
 import httpClient from '@/shared/services/httpClient'
-import {
-    ChatRoomInfoDto,
-    ChatMessageDto,
-} from '@/features/room/types'
+import { ChatRoomInfoDto, ChatMessageDto } from '@/features/room/types'
 import {
     toChatMessageListData,
     toChatRoomInfoData,
