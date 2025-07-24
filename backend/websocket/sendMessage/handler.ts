@@ -48,7 +48,7 @@ export const handler = async function (
         nickname,
         content: message,
         senderId: event.requestContext.connectionId,
-        timestamp: timestamp,
+        timestamp,
       },
     })
   );
