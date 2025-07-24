@@ -9,6 +9,9 @@ export const buildRoom = async (data: CreateRoomRequest): Promise<Room> => {
     const room: Room = {
         roomId: uuid,
         title: data.title,
+        description: data.description ?? '',
+        bannerUrl: data.bannerUrl ?? '',
+        iconUrl: data.iconUrl ?? '',
         createdAt: now,
         isActive: true,
     }
