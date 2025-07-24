@@ -4,6 +4,8 @@ org: qnafordgu
 service: qnafordgu
 frameworkVersion: "3"
 
+useDotenv: true
+
 plugins:
   - serverless-esbuild
   - serverless-dotenv-plugin
