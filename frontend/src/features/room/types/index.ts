@@ -11,7 +11,7 @@ export interface ChatMessageDto {
     id: string
     nickname: string
     content: string
-    createdAt: string
+    timestamp: string
     likes: number
 }
 

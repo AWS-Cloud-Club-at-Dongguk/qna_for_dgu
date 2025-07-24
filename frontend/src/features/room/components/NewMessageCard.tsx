@@ -13,7 +13,7 @@ function NewMessageCard({ message }: { message: ChatMessageData }) {
                         {message.nickname}
                     </span>
                     <span className="text-xs sm:text-sm text-muted">
-                        {formatTime(message.createdAt)}
+                        {formatTime(message.timestamp)}
                     </span>
                 </div>
                 <div className="text-lg sm:text-xl font-bold text-black-soft whitespace-pre-wrap break-words">

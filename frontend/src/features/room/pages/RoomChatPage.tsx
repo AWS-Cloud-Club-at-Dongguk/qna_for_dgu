@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import { useChatRoomReadMode } from '@/context/ChatModeContext'
 import MessageCard from '@/features/room/components/MessageCard'
 import ChatInput from '@/features/room/components/ChatInput'
 import NewMessageCard from '@/features/room/components/NewMessageCard'
-import { ChatMessageData } from '@/features/room/types'
+import { ChatMessageData, ChatMessageDto } from '@/features/room/types'
+import wsClient from '@/shared/services/wsClient'
+import httpClient from '@/shared/services/httpClient'
 
 function RoomChatPage() {
     const [messages, setMessages] = useState<ChatMessageData[]>([])
@@ -16,9 +18,9 @@ function RoomChatPage() {
     const [like, setLike] = useState<{ [key: string]: boolean }>({})
     const { isReadMode } = useChatRoomReadMode()
     const scrollRef = useRef<HTMLDivElement>(null)
+    const socketRef = useRef<WebSocket | null>(null)
 
-    const [searchParams, setSearchParams] = useSearchParams()
-    const roomId = searchParams.get('roomId') || ''
+    const { roomId } = useParams<{ roomId: string }>()
 
     const SCROLL_THRESHOLD = 50 // 스크롤이 이 거리보다 가까우면 자동 스크롤
 
@@ -46,29 +48,38 @@ function RoomChatPage() {
         }
     }
 
-    // 초기 메시지 로드 및 스크롤 위치 조정
     const sendMessage = (content: string) => {
-        const newMsg = {
-            id: Math.random().toString(),
-            nickname,
-            content,
-            createdAt: new Date().toISOString(),
-            likes: 0,
-        }
-
-        const shouldAutoScroll = isNearBottom()
-
-        setMessages((prev) => [...prev, newMsg])
-
-        setTimeout(() => {
-            if (shouldAutoScroll) {
-                scrollToBottom()
-            } else {
-                setUnreadMessage(newMsg)
+        if (socketRef.current) {
+            // 내 메시지 즉시 화면에 표시
+            const myMsg = {
+                id: Math.random().toString(), // Add a unique id
+                nickname: 'Me',
+                content,
+                timestamp: new Date().toISOString(),
+                likes: 0,
+                isLiked: false, // Add the isLiked property
             }
-        }, 10)
+
+            const shouldAutoScroll = isNearBottom()
+            setMessages((prev) => [...prev, myMsg])
+
+            setTimeout(() => {
+                if (shouldAutoScroll) {
+                    scrollToBottom()
+                }
+            }, 10)
+
+            // WebSocket으로 다른 사용자들에게 전송
+            wsClient.send(socketRef.current, {
+                action: 'sendMessage',
+                nickname: nickname || 'Anonymous',
+                message: content,
+                roomId,
+            })
+        }
     }
 
+    /** 우선 사용 안 함 */
     const likeMessage = (id: string) => {
         const alreadyLiked = like[id] ?? false
 
@@ -88,28 +99,88 @@ function RoomChatPage() {
         }))
     }
 
-    useEffect(() => {
-        setMessages([
-            {
-                id: '1',
-                nickname: '테스터1',
-                isLiked: false,
-                content: '첫 번째 메시지입니다.',
-                createdAt: new Date().toISOString(),
-                likes: 2,
-            },
-            {
-                id: '2',
-                nickname: '테스터2',
-                isLiked: false,
-                content: 'QnA 채팅방에 오신 걸 환영합니다!',
-                createdAt: new Date().toISOString(),
-                likes: 0,
-            },
-        ])
+    const handleWebSocketMessage = (event: MessageEvent) => {
+        console.log('WebSocket message received:', event.data)
 
-        setTimeout(scrollToBottom, 0)
-    }, [])
+        try {
+            const data = JSON.parse(event.data)
+            if (data.type === 'message') {
+                const newMsg = {
+                    id: data.id,
+                    nickname: data.nickname,
+                    content: data.message,
+                    timestamp: data.timestamp || new Date().toISOString(),
+                    likes: 0,
+                    isLiked: false, // Add the isLiked property
+                }
+
+                const shouldAutoScroll = isNearBottom()
+                setMessages((prev) => {
+                    return [...prev, newMsg]
+                })
+
+                setTimeout(() => {
+                    if (shouldAutoScroll) {
+                        scrollToBottom()
+                    } else {
+                        setUnreadMessage(newMsg)
+                    }
+                }, 10)
+            }
+        } catch (error) {
+            console.error('Failed to parse WebSocket message:', error)
+        }
+    }
+
+    useEffect(() => {
+        if (!roomId) return
+
+        const loadMessages = async () => {
+            try {
+                const data = await httpClient.get<{
+                    messages: ChatMessageDto[]
+                }>(`rooms/${roomId}/messages`)
+
+                const loadedMessages = data.messages.map((msg) => ({
+                    id: msg.id,
+                    nickname: msg.nickname ?? 'Anonymous',
+                    content: msg.content,
+                    timestamp: msg.timestamp,
+                    likes: 0,
+                    isLiked: false,
+                }))
+
+                setMessages(loadedMessages)
+                setTimeout(scrollToBottom, 0)
+            } catch (error) {
+                console.error('메시지 로딩 실패:', error)
+            }
+        }
+
+        loadMessages()
+
+        const socket = wsClient.connect('', { roomId }, handleWebSocketMessage)
+        socketRef.current = socket
+
+        // WebSocket 연결 상태 확인
+        if (socketRef.current) {
+            socketRef.current.onopen = () => console.log('WebSocket connected')
+            socketRef.current.onerror = (error) =>
+                console.log('WebSocket error:', error)
+            socketRef.current.onclose = () => console.log('WebSocket closed')
+        }
+
+        return () => {
+            console.log('Cleaning up WebSocket connection')
+            if (
+                socketRef.current &&
+                socketRef.current.readyState === WebSocket.OPEN
+            ) {
+                wsClient.close(socketRef.current)
+            }
+            socketRef.current = null
+        }
+    }, [roomId])
 
     return (
         <div className="flex flex-col h-full w-full mx-auto relative px-2">
@@ -124,7 +195,6 @@ function RoomChatPage() {
                         <MessageCard
                             key={msg.id}
                             message={msg}
-                            isLiked={like[msg.id] ?? false}
                             onLike={likeMessage}
                             isNew={false}
                         />

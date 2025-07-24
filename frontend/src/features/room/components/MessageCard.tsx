@@ -1,4 +1,4 @@
-import HeartIcon from '@/assets/icons/heart_empty.svg?react'
+// import HeartIcon from '@/assets/icons/heart_empty.svg?react'
 import DefaultProfileIcon from '@/assets/icons/default_profile.svg?react'
 import linkifyText from '@/shared/utils/linkifyText'
 import formatTime from '@/shared/utils/formatTime'
@@ -10,8 +10,8 @@ type Props = {
     isNew: boolean
 }
 
-function MessageCard({ message, onLike, isNew }: Props) {
-    const formattedTime = formatTime(message.createdAt)
+function MessageCard({ message, isNew }: Props) {
+    const formattedTime = formatTime(message.timestamp)
 
     return (
         <div
@@ -35,6 +35,7 @@ function MessageCard({ message, onLike, isNew }: Props) {
                     <p className="text-lg sm:text-xl font-bold text-black-soft whitespace-pre-wrap break-words">
                         {linkifyText(message.content)}
                     </p>
+                    {/*}
                     <button
                         type="button"
                         onClick={() => onLike(message.id)}
@@ -47,6 +48,7 @@ function MessageCard({ message, onLike, isNew }: Props) {
                         />
                         <span>{message.likes}</span>
                     </button>
+                    */}
                 </div>
             </div>
         </div>

@@ -21,8 +21,8 @@ export const toChatMessageListData = (
     return messages
         .sort(
             (a, b) =>
-                new Date(a.createdAt).getTime() -
-                new Date(b.createdAt).getTime()
+                new Date(a.timestamp).getTime() -
+                new Date(b.timestamp).getTime()
         )
         .map(toChatMessageData)
 }
