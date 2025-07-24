@@ -117,9 +117,9 @@ export const handler = async function (
         if ((e as any).statusCode === 410) {
           try {
             await docClient.send(
-              new PutCommand({
+              new DeleteCommand({
                 TableName: TABLE_NAME_CONNECTION,
-                Item: {
+                Key: {
                   connectionId
                 }
               })
