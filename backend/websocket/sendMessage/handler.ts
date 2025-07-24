@@ -44,7 +44,7 @@ export const handler = async function (
       TableName: TABLE_NAME_MESSAGE,
       Item: {
         roomId,
-        messageId: messageId,
+        messageId,
         nickname: nickname,
         content: message,
         senderId: event.requestContext.connectionId,
