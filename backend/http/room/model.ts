@@ -11,6 +11,9 @@ export const createRoomRequestSchema = z.object({
         .max(100, "Title must be at most 100 characters long")
         .transform((val) => val.trim() || "Untitled") // || 연산자에서 ""는 falsy로 간주되어 "Untitled"로 대체됨
         .default("Untitled"),
+    description: z.string().optional(),
+    bannerUrl: z.string().optional(),
+    iconUrl: z.string().optional()
 });
 
 // 2. DynamoDB에 저장할 때 사용할 Room 스키마
@@ -36,8 +39,10 @@ export const deleteRoomRequestSchema = z.object({
 
 // Update Room에 대한 클라이언트 입력용 스키마
 export const updateRoomRequestSchema = z.object({
-    roomId: z.string(),
-    title: z.string().max(100, "Title must be at most 100 characters long"),
+    title: z.string().max(100, "Title must be at most 100 characters long").optional(),
+    description: z.string().optional(),
+    bannerUrl: z.string().optional(),
+    iconUrl: z.string().optional()
 });
 
 export const updateRoomResponseSchema = z.object({
@@ -48,6 +53,7 @@ export const updateRoomResponseSchema = z.object({
 
 const messageSchema = z.object({
     messageId: z.string(),
+    nickname: z.string(),
     content: z.string(),
     timestamp: z.string(),
     senderId: z.string(),

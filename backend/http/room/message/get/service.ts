@@ -12,6 +12,7 @@ export const getMessages = async (roomId: string): Promise<GetRoomMessagesRespon
     const responseBody: GetRoomMessagesResponse = {
         messages: messages.map(message => ({
             messageId: message.messageId,
+            nickname: message.nickname,
             content: message.content,
             timestamp: message.timestamp,
             senderId: message.senderId,
